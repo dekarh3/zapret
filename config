@@ -68,7 +68,7 @@ TPWS_OPT="
 --filter-tcp=443 --split-tls=sni --disorder <HOSTLIST>
 "
 
-NFQWS_ENABLE=0
+NFQWS_ENABLE=1
 # redirect outgoing traffic with connbytes limiter applied in both directions.
 NFQWS_PORTS_TCP=80,443
 NFQWS_PORTS_UDP=443
@@ -93,9 +93,20 @@ NFQWS_OPT="
 --filter-tcp=443 --dpi-desync=fake,disorder2 --dpi-desync-fooling=md5sig <HOSTLIST> --new
 --filter-udp=443 --dpi-desync=fake --dpi-desync-repeats=6 <HOSTLIST_NOAUTO>
 "
+MODE=nfqws
+MODE_HTTP=1
+MODE_HTTPS=1
+MODE_QUIC=1
+NFQWS_OPT_DESYNC="--dpi-desync=fake,disorder2 --dpi-desync-split-pos=1 --dpi-desync-ttl=0 --dpi-desync-fooling=md5sig,badsum --dpi-desync-repeats=15 --dpi-desync-any-protocol --dpi-desync-cutoff=d4 --dpi-desync-fake-tls=/opt/zapret/files/fake/tls_clienthello_www_google_com.bin"
+#NFQWS_OPT_DESYNC_HTTP=""
+#NFQWS_OPT_DESYNC_HTTPS=""
+#NFQWS_OPT_DESYNC_HTTP6=""
+#NFQWS_OPT_DESYNC_HTTPS6=""
+NFQWS_OPT_DESYNC_QUIC="--dpi-desync=fake --dpi-desync-repeats=15 --dpi-desync-ttl=0 --dpi-desync-any-protocol --dpi-desync-cutoff=d4 --dpi-desync-fooling=md5sig,badsum --dpi-desync-fake-quic=/opt/zapret/files/fake/quic_initial_google_com.bin"
+
 
 # none,ipset,hostlist,autohostlist
-MODE_FILTER=none
+MODE_FILTER=hostlist
 
 # openwrt only : donttouch,none,software,hardware
 FLOWOFFLOAD=donttouch
@@ -132,4 +143,4 @@ DISABLE_IPV6=1
 # select which init script will be used to get ip or host list
 # possible values : get_user.sh get_antizapret.sh get_combined.sh get_reestr.sh get_hostlist.sh
 # comment if not required
-#GETLIST=
+GETLIST=get_antizapret_domains.sh
