@@ -1,0 +1,66 @@
+Калуга, Билайн (домашний). Максимально криво и косо, но по крайней мере работает. Обходит YouTube + остальные сайты кроме дискорда (не пользуюсь им) через это:
+Много букв
+
+/opt/zapret/config:
+
+NFQWS_ENABLE=1
+NFQWS_OPT="
+--filter-tcp=80 --dpi-desync=fake --dpi-desync-ttl=7 --dpi-desync-fake-http=0x00000000 <HOSTLIST> --new
+--filter-tcp=443 --hostlist=/opt/zapret/ipset/youtube.txt --dpi-desync=fake,split --dpi-desync-ttl=4 --dpi-desync-fooling=badseq --dpi-desync-fake-tls=/opt/zapret/files/fake/tls_clienthello_www_google_com.bin --dpi-desync-repeats=3 --dpi-desync-split-pos=1 --new
+--filter-tcp=443 --dpi-desync=fake,disorder2 --dpi-desync-ttl=4 --dpi-desync-fooling=badsum <HOSTLIST> --new
+--filter-udp=443 --dpi-desync=fake --dpi-desync-repeats=6 <HOSTLIST_NOAUTO>
+"
+MODE_FILTER=hostlist
+
+/opt/zapret/ipset/youtube.txt:
+
+play.google.ru
+play.google.com
+account.youtube.com
+youtube.com
+www.youtube.com
+i.ytimg.com
+studio.youtube.com
+googlevideo.com
+yt3.ggpht.com
+yt4.ggpht.com
+youtu.be
+yt.be
+ytimg.com
+ggpht.com
+gvt1.com
+youtube.googleapis.com
+youtubeembeddedplayer.googleapis.com
+ytimg.l.google.com
+nhacmp3youtube.com
+jnn-pa.googleapis.com
+youtube-nocookie.com
+youtube-ui.l.google.com
+yt-video-upload.l.google.com
+wide-youtube.l.google.com
+
+/opt/zapret/ipset/zapret-hosts-user.txt:
+
+chat.signal.org
+cdn2.signal.org
+storage.signal.org
+sfu.voip.signal.org
+updates2.signal.org
+uptime.signal.org
+
+pornhub.com
+rt.pornhub.com
+ei.phncdn.com
+phncdn.com
+ew.phncdn.com
+ss.phncdn.com
+cdn1d-static-shared.phncdn.com
+
+/etc/hosts:
+
+104.244.42.13 twitter.com www.twitter.com x.com
+157.240.245.174 instagram.com www.instagram.com
+
+Выполнить sudo /opt/zapret/ipset/get_reestr_hostlist.sh и sudo /opt/zapret/ipset/get_antizapret_domains.sh.
+
+Тестировалось на ПК, могут быть проблемы на роутере из-за больших листов в самом конце спойлера. Используйте на свой страх и риск
